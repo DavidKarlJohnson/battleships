@@ -1,0 +1,557 @@
+
+<!DOCTYPE html>
+
+
+<html>   
+    <head>     <!-- Information about the webbpage / invisible elements go here -->
+        <title>PKD Battleship v2</title>
+        
+        <style>
+            .player_button {
+                background-color: rgb(204, 210, 215);
+                padding: 15px 15px;
+            }
+
+            .opponent_button {
+                background-color: rgb(204, 210, 215);
+                padding: 15px 15px;
+                cursor: crosshair;
+            }
+
+            .opponent_button:hover {
+                background-color: rgb(232, 245, 119);
+                border-style: dashed;
+            }
+
+            .opponent_button:focus {
+                background-color: rgb(138, 135, 135);
+            }
+
+            .player_board {
+                display: inline-block;  /* Ensures that the block doesnt take up the whole line */
+            }
+
+            .opponent_board {
+                display: inline-block;   /* Ensures that the block doesnt take up the whole line */
+                margin-left: 75px;
+                pointer-events: auto;
+            }
+
+            .player_title {
+                font-weight: bolder;
+                font-family: Arial;
+                color: rgb(38, 66, 210);
+                font-size: 50px;
+                margin-left: 200px;
+            }
+
+            .opponent_title {
+                font-weight: bolder;
+                font-family: Arial;
+                color: rgb(249, 102, 102);
+                font-size: 50px;
+                margin-left: 150px;
+            }
+
+            .ship_icon {
+                display: inline-block;
+                width: 100px;
+            }
+
+            .hidden {
+                width: 100px;
+                background-color: white;
+            }
+
+            .ship_score {
+                display: inline-block;
+            }
+          
+        </style>
+        
+
+
+    </head>
+
+    <body>      <!-- Elements visible to the user goes here -->
+
+
+        <div class="player_board">
+            <p class="player_title">Player*</p>
+
+
+            <div class="player_ship_icons">
+                <img src="icon_submarine.png" id="player_submarine_icon" class="ship_icon">
+                <img src="icon_destroyer.png" id="player_destroyer_icon" class="ship_icon">
+                <img src="icon_carrier.png" id="player_carrier_icon" class="ship_icon">
+                <img src="icon_battleship.png" id="player_battleship_icon" class="ship_icon">
+                <img src="icon_cruiser.png" id="player_cruiser_icon" class="ship_icon">
+            </div>
+
+            <button id="player_00" class="player_button" onclick="fire_at_grid(this.id)">A1</button>
+            <button id="player_01" class="player_button" onclick="fire_at_grid(this.id)">B1</button>
+            <button id="player_02" class="player_button" onclick="fire_at_grid(this.id)">C1</button>
+            <button id="player_03" class="player_button" onclick="fire_at_grid(this.id)">D1</button>
+            <button id="player_04" class="player_button" onclick="fire_at_grid(this.id)">E1</button>
+            <button id="player_05" class="player_button" onclick="fire_at_grid(this.id)">F1</button>
+            <button id="player_06" class="player_button" onclick="fire_at_grid(this.id)">G1</button>
+            <button id="player_07" class="player_button" onclick="fire_at_grid(this.id)">H1</button>
+            <button id="player_08" class="player_button" onclick="fire_at_grid(this.id)">I1</button>
+            <button id="player_09" class="player_button" onclick="fire_at_grid(this.id)">J1</button>
+            <div></div>
+            <button id="player_10" class="player_button" onclick="fire_at_grid(this.id)">A2</button>
+            <button id="player_11" class="player_button" onclick="fire_at_grid(this.id)">B2</button>
+            <button id="player_12" class="player_button" onclick="fire_at_grid(this.id)">C2</button>
+            <button id="player_13" class="player_button" onclick="fire_at_grid(this.id)">D2</button>
+            <button id="player_14" class="player_button" onclick="fire_at_grid(this.id)">E2</button>
+            <button id="player_15" class="player_button" onclick="fire_at_grid(this.id)">F2</button>
+            <button id="player_16" class="player_button" onclick="fire_at_grid(this.id)">G2</button>
+            <button id="player_17" class="player_button" onclick="fire_at_grid(this.id)">H2</button>
+            <button id="player_18" class="player_button" onclick="fire_at_grid(this.id)">I2</button>
+            <button id="player_19" class="player_button" onclick="fire_at_grid(this.id)">J2</button>
+            <div></div>
+            <button id="player_20" class="player_button" onclick="fire_at_grid(this.id)">A3</button>
+            <button id="player_21" class="player_button" onclick="fire_at_grid(this.id)">B3</button>
+            <button id="player_22" class="player_button" onclick="fire_at_grid(this.id)">C3</button>
+            <button id="player_23" class="player_button" onclick="fire_at_grid(this.id)">D3</button>
+            <button id="player_24" class="player_button" onclick="fire_at_grid(this.id)">E3</button>
+            <button id="player_25" class="player_button" onclick="fire_at_grid(this.id)">F3</button>
+            <button id="player_26" class="player_button" onclick="fire_at_grid(this.id)">G3</button>
+            <button id="player_27" class="player_button" onclick="fire_at_grid(this.id)">H3</button>
+            <button id="player_28" class="player_button" onclick="fire_at_grid(this.id)">I3</button>
+            <button id="player_29" class="player_button" onclick="fire_at_grid(this.id)">J3</button>
+            <div></div>
+            <button id="player_30" class="player_button" onclick="fire_at_grid(this.id)">A4</button>
+            <button id="player_31" class="player_button" onclick="fire_at_grid(this.id)">B4</button>
+            <button id="player_32" class="player_button" onclick="fire_at_grid(this.id)">C4</button>
+            <button id="player_33" class="player_button" onclick="fire_at_grid(this.id)">D4</button>
+            <button id="player_34" class="player_button" onclick="fire_at_grid(this.id)">E4</button>
+            <button id="player_35" class="player_button" onclick="fire_at_grid(this.id)">F4</button>
+            <button id="player_36" class="player_button" onclick="fire_at_grid(this.id)">G4</button>
+            <button id="player_37" class="player_button" onclick="fire_at_grid(this.id)">H4</button>
+            <button id="player_38" class="player_button" onclick="fire_at_grid(this.id)">I4</button>
+            <button id="player_39" class="player_button" onclick="fire_at_grid(this.id)">J4</button>
+            <div></div>
+            <button id="player_40" class="player_button" onclick="fire_at_grid(this.id)">A5</button>
+            <button id="player_41" class="player_button" onclick="fire_at_grid(this.id)">B5</button>
+            <button id="player_42" class="player_button" onclick="fire_at_grid(this.id)">C5</button>
+            <button id="player_43" class="player_button" onclick="fire_at_grid(this.id)">D5</button>
+            <button id="player_44" class="player_button" onclick="fire_at_grid(this.id)">E5</button>
+            <button id="player_45" class="player_button" onclick="fire_at_grid(this.id)">F5</button>
+            <button id="player_46" class="player_button" onclick="fire_at_grid(this.id)">G5</button>
+            <button id="player_47" class="player_button" onclick="fire_at_grid(this.id)">H5</button>
+            <button id="player_48" class="player_button" onclick="fire_at_grid(this.id)">I5</button>
+            <button id="player_49" class="player_button" onclick="fire_at_grid(this.id)">J5</button>
+            <div></div>
+            <button id="player_50" class="player_button" onclick="fire_at_grid(this.id)">A6</button>
+            <button id="player_51" class="player_button" onclick="fire_at_grid(this.id)">B6</button>
+            <button id="player_52" class="player_button" onclick="fire_at_grid(this.id)">C6</button>
+            <button id="player_53" class="player_button" onclick="fire_at_grid(this.id)">D6</button>
+            <button id="player_54" class="player_button" onclick="fire_at_grid(this.id)">E6</button>
+            <button id="player_55" class="player_button" onclick="fire_at_grid(this.id)">F6</button>
+            <button id="player_56" class="player_button" onclick="fire_at_grid(this.id)">G6</button>
+            <button id="player_57" class="player_button" onclick="fire_at_grid(this.id)">H6</button>
+            <button id="player_58" class="player_button" onclick="fire_at_grid(this.id)">I6</button>
+            <button id="player_59" class="player_button" onclick="fire_at_grid(this.id)">J6</button>
+            <div></div>
+            <button id="player_60" class="player_button" onclick="fire_at_grid(this.id)">A7</button>
+            <button id="player_61" class="player_button" onclick="fire_at_grid(this.id)">B7</button>
+            <button id="player_62" class="player_button" onclick="fire_at_grid(this.id)">C7</button>
+            <button id="player_63" class="player_button" onclick="fire_at_grid(this.id)">D7</button>
+            <button id="player_64" class="player_button" onclick="fire_at_grid(this.id)">E7</button>
+            <button id="player_65" class="player_button" onclick="fire_at_grid(this.id)">F7</button>
+            <button id="player_66" class="player_button" onclick="fire_at_grid(this.id)">G7</button>
+            <button id="player_67" class="player_button" onclick="fire_at_grid(this.id)">H7</button>
+            <button id="player_68" class="player_button" onclick="fire_at_grid(this.id)">I7</button>
+            <button id="player_69" class="player_button" onclick="fire_at_grid(this.id)">J7</button>
+            <div></div>
+            <button id="player_70" class="player_button" onclick="fire_at_grid(this.id)">A8</button>
+            <button id="player_71" class="player_button" onclick="fire_at_grid(this.id)">B8</button>
+            <button id="player_72" class="player_button" onclick="fire_at_grid(this.id)">C8</button>
+            <button id="player_73" class="player_button" onclick="fire_at_grid(this.id)">D8</button>
+            <button id="player_74" class="player_button" onclick="fire_at_grid(this.id)">E8</button>
+            <button id="player_75" class="player_button" onclick="fire_at_grid(this.id)">F8</button>
+            <button id="player_76" class="player_button" onclick="fire_at_grid(this.id)">G8</button>
+            <button id="player_77" class="player_button" onclick="fire_at_grid(this.id)">H8</button>
+            <button id="player_78" class="player_button" onclick="fire_at_grid(this.id)">I8</button>
+            <button id="player_79" class="player_button" onclick="fire_at_grid(this.id)">J8</button>
+            <div></div>
+            <button id="player_80" class="player_button" onclick="fire_at_grid(this.id)">A9</button>
+            <button id="player_81" class="player_button" onclick="fire_at_grid(this.id)">B9</button>
+            <button id="player_82" class="player_button" onclick="fire_at_grid(this.id)">C9</button>
+            <button id="player_83" class="player_button" onclick="fire_at_grid(this.id)">D9</button>
+            <button id="player_84" class="player_button" onclick="fire_at_grid(this.id)">E9</button>
+            <button id="player_85" class="player_button" onclick="fire_at_grid(this.id)">F9</button>
+            <button id="player_86" class="player_button" onclick="fire_at_grid(this.id)">G9</button>
+            <button id="player_87" class="player_button" onclick="fire_at_grid(this.id)">H9</button>
+            <button id="player_88" class="player_button" onclick="fire_at_grid(this.id)">I9</button>
+            <button id="player_89" class="player_button" onclick="fire_at_grid(this.id)">J9</button>
+            <div></div>
+        </div>
+
+        <div class="opponent_board" id="opponent_board">
+            <p class="opponent_title">Opponent</p>
+            <div class="opponent_ship_icons">
+                <img src="icon_submarine.png" id="opponent_submarine_icon" class="ship_icon">
+                <img src="icon_destroyer.png" id="opponent_destroyer_icon" class="ship_icon">
+                <img src="icon_carrier.png" id="opponent_carrier_icon" class="ship_icon">
+                <img src="icon_battleship.png" id="opponent_battleship_icon" class="ship_icon">
+                <img src="icon_cruiser.png" id="opponent_cruiser_icon" class="ship_icon">
+            </div>
+            <button id="opponent_00" class="opponent_button" onclick="fire_at_grid(this.id)">A1</button>
+            <button id="opponent_01" class="opponent_button" onclick="fire_at_grid(this.id)">B1</button>
+            <button id="opponent_02" class="opponent_button" onclick="fire_at_grid(this.id)">C1</button>
+            <button id="opponent_03" class="opponent_button" onclick="fire_at_grid(this.id)">D1</button>
+            <button id="opponent_04" class="opponent_button" onclick="fire_at_grid(this.id)">E1</button>
+            <button id="opponent_05" class="opponent_button" onclick="fire_at_grid(this.id)">F1</button>
+            <button id="opponent_06" class="opponent_button" onclick="fire_at_grid(this.id)">G1</button>
+            <button id="opponent_07" class="opponent_button" onclick="fire_at_grid(this.id)">H1</button>
+            <button id="opponent_08" class="opponent_button" onclick="fire_at_grid(this.id)">I1</button>
+            <button id="opponent_09" class="opponent_button" onclick="fire_at_grid(this.id)">J1</button>
+            <div></div>
+            <button id="opponent_10" class="opponent_button" onclick="fire_at_grid(this.id)">A2</button>
+            <button id="opponent_11" class="opponent_button" onclick="fire_at_grid(this.id)">B2</button>
+            <button id="opponent_12" class="opponent_button" onclick="fire_at_grid(this.id)">C2</button>
+            <button id="opponent_13" class="opponent_button" onclick="fire_at_grid(this.id)">D2</button>
+            <button id="opponent_14" class="opponent_button" onclick="fire_at_grid(this.id)">E2</button>
+            <button id="opponent_15" class="opponent_button" onclick="fire_at_grid(this.id)">F2</button>
+            <button id="opponent_16" class="opponent_button" onclick="fire_at_grid(this.id)">G2</button>
+            <button id="opponent_17" class="opponent_button" onclick="fire_at_grid(this.id)">H2</button>
+            <button id="opponent_18" class="opponent_button" onclick="fire_at_grid(this.id)">I2</button>
+            <button id="opponent_19" class="opponent_button" onclick="fire_at_grid(this.id)">J2</button>
+            <div></div>
+            <button id="opponent_20" class="opponent_button" onclick="fire_at_grid(this.id)">A3</button>
+            <button id="opponent_21" class="opponent_button" onclick="fire_at_grid(this.id)">B3</button>
+            <button id="opponent_22" class="opponent_button" onclick="fire_at_grid(this.id)">C3</button>
+            <button id="opponent_23" class="opponent_button" onclick="fire_at_grid(this.id)">D3</button>
+            <button id="opponent_24" class="opponent_button" onclick="fire_at_grid(this.id)">E3</button>
+            <button id="opponent_25" class="opponent_button" onclick="fire_at_grid(this.id)">F3</button>
+            <button id="opponent_26" class="opponent_button" onclick="fire_at_grid(this.id)">G3</button>
+            <button id="opponent_27" class="opponent_button" onclick="fire_at_grid(this.id)">H3</button>
+            <button id="opponent_28" class="opponent_button" onclick="fire_at_grid(this.id)">I3</button>
+            <button id="opponent_29" class="opponent_button" onclick="fire_at_grid(this.id)">J3</button>
+            <div></div>
+            <button id="opponent_30" class="opponent_button" onclick="fire_at_grid(this.id)">A4</button>
+            <button id="opponent_31" class="opponent_button" onclick="fire_at_grid(this.id)">B4</button>
+            <button id="opponent_32" class="opponent_button" onclick="fire_at_grid(this.id)">C4</button>
+            <button id="opponent_33" class="opponent_button" onclick="fire_at_grid(this.id)">D4</button>
+            <button id="opponent_34" class="opponent_button" onclick="fire_at_grid(this.id)">E4</button>
+            <button id="opponent_35" class="opponent_button" onclick="fire_at_grid(this.id)">F4</button>
+            <button id="opponent_36" class="opponent_button" onclick="fire_at_grid(this.id)">G4</button>
+            <button id="opponent_37" class="opponent_button" onclick="fire_at_grid(this.id)">H4</button>
+            <button id="opponent_38" class="opponent_button" onclick="fire_at_grid(this.id)">I4</button>
+            <button id="opponent_39" class="opponent_button" onclick="fire_at_grid(this.id)">J4</button>
+            <div></div>
+            <button id="opponent_40" class="opponent_button" onclick="fire_at_grid(this.id)">A5</button>
+            <button id="opponent_41" class="opponent_button" onclick="fire_at_grid(this.id)">B5</button>
+            <button id="opponent_42" class="opponent_button" onclick="fire_at_grid(this.id)">C5</button>
+            <button id="opponent_43" class="opponent_button" onclick="fire_at_grid(this.id)">D5</button>
+            <button id="opponent_44" class="opponent_button" onclick="fire_at_grid(this.id)">E5</button>
+            <button id="opponent_45" class="opponent_button" onclick="fire_at_grid(this.id)">F5</button>
+            <button id="opponent_46" class="opponent_button" onclick="fire_at_grid(this.id)">G5</button>
+            <button id="opponent_47" class="opponent_button" onclick="fire_at_grid(this.id)">H5</button>
+            <button id="opponent_48" class="opponent_button" onclick="fire_at_grid(this.id)">I5</button>
+            <button id="opponent_49" class="opponent_button" onclick="fire_at_grid(this.id)">J5</button>
+            <div></div>
+            <button id="opponent_50" class="opponent_button" onclick="fire_at_grid(this.id)">A6</button>
+            <button id="opponent_51" class="opponent_button" onclick="fire_at_grid(this.id)">B6</button>
+            <button id="opponent_52" class="opponent_button" onclick="fire_at_grid(this.id)">C6</button>
+            <button id="opponent_53" class="opponent_button" onclick="fire_at_grid(this.id)">D6</button>
+            <button id="opponent_54" class="opponent_button" onclick="fire_at_grid(this.id)">E6</button>
+            <button id="opponent_55" class="opponent_button" onclick="fire_at_grid(this.id)">F6</button>
+            <button id="opponent_56" class="opponent_button" onclick="fire_at_grid(this.id)">G6</button>
+            <button id="opponent_57" class="opponent_button" onclick="fire_at_grid(this.id)">H6</button>
+            <button id="opponent_58" class="opponent_button" onclick="fire_at_grid(this.id)">I6</button>
+            <button id="opponent_59" class="opponent_button" onclick="fire_at_grid(this.id)">J6</button>
+            <div></div>
+            <button id="opponent_60" class="opponent_button" onclick="fire_at_grid(this.id)">A7</button>
+            <button id="opponent_61" class="opponent_button" onclick="fire_at_grid(this.id)">B7</button>
+            <button id="opponent_62" class="opponent_button" onclick="fire_at_grid(this.id)">C7</button>
+            <button id="opponent_63" class="opponent_button" onclick="fire_at_grid(this.id)">D7</button>
+            <button id="opponent_64" class="opponent_button" onclick="fire_at_grid(this.id)">E7</button>
+            <button id="opponent_65" class="opponent_button" onclick="fire_at_grid(this.id)">F7</button>
+            <button id="opponent_66" class="opponent_button" onclick="fire_at_grid(this.id)">G7</button>
+            <button id="opponent_67" class="opponent_button" onclick="fire_at_grid(this.id)">H7</button>
+            <button id="opponent_68" class="opponent_button" onclick="fire_at_grid(this.id)">I7</button>
+            <button id="opponent_69" class="opponent_button" onclick="fire_at_grid(this.id)">J7</button>
+            <div></div>
+            <button id="opponent_70" class="opponent_button" onclick="fire_at_grid(this.id)">A8</button>
+            <button id="opponent_71" class="opponent_button" onclick="fire_at_grid(this.id)">B8</button>
+            <button id="opponent_72" class="opponent_button" onclick="fire_at_grid(this.id)">C8</button>
+            <button id="opponent_73" class="opponent_button" onclick="fire_at_grid(this.id)">D8</button>
+            <button id="opponent_74" class="opponent_button" onclick="fire_at_grid(this.id)">E8</button>
+            <button id="opponent_75" class="opponent_button" onclick="fire_at_grid(this.id)">F8</button>
+            <button id="opponent_76" class="opponent_button" onclick="fire_at_grid(this.id)">G8</button>
+            <button id="opponent_77" class="opponent_button" onclick="fire_at_grid(this.id)">H8</button>
+            <button id="opponent_78" class="opponent_button" onclick="fire_at_grid(this.id)">I8</button>
+            <button id="opponent_79" class="opponent_button" onclick="fire_at_grid(this.id)">J8</button>
+            <div></div>
+            <button id="opponent_80" class="opponent_button" onclick="fire_at_grid(this.id)">A9</button>
+            <button id="opponent_81" class="opponent_button" onclick="fire_at_grid(this.id)">B9</button>
+            <button id="opponent_82" class="opponent_button" onclick="fire_at_grid(this.id)">C9</button>
+            <button id="opponent_83" class="opponent_button" onclick="fire_at_grid(this.id)">D9</button>
+            <button id="opponent_84" class="opponent_button" onclick="fire_at_grid(this.id)">E9</button>
+            <button id="opponent_85" class="opponent_button" onclick="fire_at_grid(this.id)">F9</button>
+            <button id="opponent_86" class="opponent_button" onclick="fire_at_grid(this.id)">G9</button>
+            <button id="opponent_87" class="opponent_button" onclick="fire_at_grid(this.id)">H9</button>
+            <button id="opponent_88" class="opponent_button" onclick="fire_at_grid(this.id)">I9</button>
+            <button id="opponent_89" class="opponent_button" onclick="fire_at_grid(this.id)">J9</button>
+            <div></div>
+            <p></p>
+        
+    
+        <script>      // Javascript code goes here
+
+            // Sound effects
+            const explosion_sound_effect = new Audio('explosion.mp3');
+            const sonar_sound_effect = new Audio('sonar.mp3');
+            const sonar2_sound_effect = new Audio('sonar_2.mp3');
+            const horn_sound_effect = new Audio('horn.mp3');
+            const ambient_music = new Audio('ambient_music.mp3');
+            horn_sound_effect.volume = 0.02;
+            ambient_music.volume = 0.25;
+
+
+
+            const player_board = [[false, false, "destroyer", false, false, false, "cruiser", "cruiser", "cruiser", false],
+                                  [false, false, "destroyer", false, false, false, false, false, false, false],
+                                  [false, false, false, false, false, false, false, false, false, false],
+                                  [false, false, false, false, false, false, false, false, false, false],
+                                  ["carrier", false, false, false, false, "submarine", "submarine", "submarine", false, false],
+                                  ["carrier", false, false, false, false, false, false, false, false, false],
+                                  ["carrier", false, false, false, false, false, false, false, false, false],
+                                  ["carrier", false, false, false, false, false, false, false, false, false],
+                                  ["carrier", false, "battleship", "battleship", "battleship", "battleship", false, false, false, false]];
+
+
+    
+
+            const opponent_board = [["destroyer", false, false, false, false, false, false, false, false, "battleship"],
+                                  ["destroyer", false, false, false, false, false, false, false, false, "battleship"],
+                                  [false, false, false, false, false, false, false, false, false, "battleship"],
+                                  [false, false, false, false, false, false, "submarine", false, false, "battleship"],
+                                  [false, false, false, false, false, false, "submarine", false, false, false],
+                                  [false, false, false, false, false, false, "submarine", false, false, false],
+                                  [false, "cruiser", "cruiser", "cruiser", false, false, false, false, false, false],
+                                  [false, false, false, false, "carrier", "carrier", "carrier", "carrier", "carrier", false],
+                                  [false, false, false, false, false, false, false, false, false, false]];
+
+
+                       
+            // Set all player buttons green if a ship is found in the array
+            for(let row = 0; row < player_board.length; row += 1) {
+                for(let column = 0; column < player_board[0].length; column += 1) {
+                    if (player_board[row][column] !== false) {
+                        const button = document.getElementById(`player_${row}${column}`);
+                        button.style.backgroundColor = 'green';
+                    }
+                }
+            }
+                                
+        // Indicators of how many hits are left 
+        // until a ship is fully destroyed
+        let player_destroyer = 2;
+        let player_cruiser = 3;
+        let player_submarine = 3;
+        let player_battleship = 4;
+        let player_carrier = 5;
+        let opponent_destroyer = 2;
+        let opponent_cruiser = 3;
+        let opponent_submarine = 3;
+        let opponent_battleship = 4;
+        let opponent_carrier = 5;
+
+        
+        function fire_at_grid(button_id, board) { 
+            ambient_music.play();  
+            const button = document.getElementById(button_id);  // ID of current button
+            const row = button_id.substr(-2, 1);  // Row to fire at
+            const column = button_id.substr(-1);  // Column to fire at
+
+            if (opponent_board[row][column] !== false) {  // Hit
+                sonar_sound_effect.play();
+                remove_ship(opponent_board[row][column], "opponent");
+                opponent_board[row][column] = false;
+                button.style.backgroundColor = 'red'; // Change button color
+            }   
+
+            lock_board();  // Lock the board during the AIs turn
+            setTimeout(ai_fire_at_player, 3000);  // 3s delay until AI fires
+        }
+
+
+
+        // This function targets a random tile on the players board for the AI to shoot at
+        // The AI won't target the same tile twice
+        // Locks player interactivity while the AI plays
+        function ai_fire_at_player() {
+            const random_row = Math.floor(Math.random() * (player_board[0].length - 1))  + 0;  // Generate a random number between 0 - max size of a row on the game board
+            const random_column = Math.floor(Math.random() * (player_board.length + 1 )) + 0;  // Generate a random number between 0 - max size of a column on the game board
+            const button = document.getElementById(`player_${random_row}${random_column}`);  // ID of current button     
+
+            if (player_board[random_row][random_column] === true) {  // If the tile is true it means that the AI has already probed that spot. If so, the function will run again until a new tile is found
+                return ai_fire_at_player();
+            }
+
+            else if (player_board[random_row][random_column] !== false) {  // Hit
+                sonar2_sound_effect.play();
+                remove_ship(player_board[random_row][random_column], "player");
+                button.style.backgroundColor = 'red'; // Change button color
+            }
+
+            else {  // Miss
+                button.style.backgroundColor = 'gray';
+            } 
+        
+            player_board[random_row][random_column] = true;
+            unlock_board();  // Unlocks interactivity for the player again
+        }
+
+
+        // This function deducts points from a ship type, either from the player or the opponent.
+        // If a ship is fully destroyed, its logo is replaced by a blank one.
+        // @ param {ship_type} string - ship type to deduct points from
+        // @ param {friendfoe} string - remove from either "player" or "opponent"
+        function remove_ship(ship_type, friendfoe) {
+            if (friendfoe === "opponent") {  // Remove ship from the opponent
+                if(ship_type === "destroyer") {
+                opponent_destroyer -= 1;
+                    if (opponent_destroyer === 0) {
+                        explosion_sound_effect.play();
+                        const icon = document.getElementById('opponent_destroyer_icon');
+                        icon.src = 'blank.png';
+                    }
+                }
+                else if(ship_type === "cruiser") {
+                    opponent_cruiser -= 1;
+                    if (opponent_cruiser === 0) {
+                        explosion_sound_effect.play();
+                        const icon = document.getElementById('opponent_cruiser_icon');
+                        icon.src = 'blank.png';
+                    }
+                }
+                else if(ship_type === "submarine") {
+                    opponent_submarine -= 1;
+                    if (opponent_submarine === 0) {
+                        explosion_sound_effect.play();
+                        const icon = document.getElementById('opponent_submarine_icon');
+                        icon.src = 'blank.png';
+                    }
+                }
+                else if(ship_type === "battleship") {
+                    opponent_battleship -= 1;
+                    if (opponent_battleship === 0) {
+                        explosion_sound_effect.play();
+                        const icon = document.getElementById('opponent_battleship_icon');
+                        icon.src = 'blank.png';
+                    }
+                }
+                else if(ship_type === "carrier") {
+                    opponent_carrier -= 1;
+                    if (opponent_carrier === 0) {
+                        explosion_sound_effect.play();
+                        const icon = document.getElementById('opponent_carrier_icon');
+                        icon.src = 'blank.png';
+                    }
+                }
+            }
+
+            else if (friendfoe === "player") {  // Remove ship from the player
+                if(ship_type === "destroyer") {
+                player_destroyer -= 1;
+                    if (player_destroyer === 0) {
+                        explosion_sound_effect.play();
+                        const icon = document.getElementById('player_destroyer_icon');
+                        icon.src = 'blank.png';
+                    }
+                }
+                else if(ship_type === "cruiser") {
+                    player_cruiser -= 1;
+                    if (player_cruiser === 0) {
+                        explosion_sound_effect.play();
+                        const icon = document.getElementById('player_cruiser_icon');
+                        icon.src = 'blank.png';
+                    }
+                }
+                else if(ship_type === "submarine") {
+                    player_submarine -= 1;
+                    if (player_submarine === 0) {
+                        explosion_sound_effect.play();
+                        const icon = document.getElementById('player_submarine_icon');
+                        icon.src = 'blank.png';
+                    }
+                }
+                else if(ship_type === "battleship") {
+                    player_battleship -= 1;
+                    if (player_battleship === 0) {
+                        explosion_sound_effect.play();
+                        const icon = document.getElementById('player_battleship_icon');
+                        icon.src = 'blank.png';
+                    }
+                }
+                else if(ship_type === "carrier") {
+                    player_carrier -= 1;
+                    if (player_carrier === 0) {
+                        explosion_sound_effect.play();
+                        const icon = document.getElementById('player_carrier_icon');
+                        icon.src = 'blank.png';
+                    }
+                }
+            } 
+            check_win_condition();  // Check if a player has no ships left
+        }
+
+
+
+        // If either the player or the opponent has no ships left
+        // the win condition is met
+        function check_win_condition() {
+            if (opponent_destroyer === 0 &&
+                opponent_cruiser === 0 &&
+                opponent_submarine === 0 &&
+                opponent_battleship === 0 &&
+                opponent_carrier === 0) {
+                    alert("You win!")
+                }
+
+            else if (player_destroyer === 0 &&
+            player_cruiser === 0 &&
+            player_submarine === 0 &&
+            player_battleship === 0 &&
+            player_carrier === 0) {
+                alert("Opponent wins!")
+            }
+        }    
+
+
+        // Locks the opponents board, making the buttons unclickabe
+        // Puts an asterix next to the opponents title, indicating that it's their turn
+        function lock_board() {
+            const board = document.getElementById('opponent_board');
+            board.style.pointerEvents = 'none';
+
+            const player_title = document.querySelector('.player_title');
+            player_title.textContent = 'Player';
+
+            const opponent_title = document.querySelector('.opponent_title');
+            opponent_title.textContent = 'Opponent*';
+        }
+
+        // Unlocks the board, making it clickable again
+        // Asterix next to the players title, indicating that it's their turn
+        function unlock_board() {
+            const board = document.getElementById('opponent_board');
+            board.style.pointerEvents = 'auto';
+
+            const player_title = document.querySelector('.player_title');
+            player_title.textContent = 'Player*';
+
+            const opponent_title = document.querySelector('.opponent_title');
+            opponent_title.textContent = 'Opponent';         
+        }
+
+
+        </script>
+    </body>
+
+</html>
