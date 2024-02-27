@@ -5,7 +5,7 @@
 <html>   
     <head>     <!-- Information about the webbpage / invisible elements go here -->
         <title>PKD Battleship v2</title>
-        
+
         <style>
             .player_button {
                 background-color: rgb(204, 210, 215);
@@ -18,7 +18,8 @@
                 cursor: crosshair;
             }
 
-            .opponent_button:hover {
+
+            .opponent_button:hover { 
                 background-color: rgb(232, 245, 119);
                 border-style: dashed;
             }
@@ -33,7 +34,6 @@
 
             .opponent_board {
                 display: inline-block;   /* Ensures that the block doesnt take up the whole line */
-                margin-left: 75px;
                 pointer-events: auto;
             }
 
@@ -51,6 +51,7 @@
                 color: rgb(249, 102, 102);
                 font-size: 50px;
                 margin-left: 150px;
+                margin-bottom: 150px;
             }
 
             .ship_icon {
@@ -59,13 +60,64 @@
             }
 
             .hidden {
-                width: 100px;
-                background-color: white;
+                opacity: 0;
             }
 
             .ship_score {
                 display: inline-block;
             }
+
+            .arrow_icon {
+                width: 100px;
+                margin-bottom: 175px;
+            }
+
+            
+            .player_submarine_hp {
+                display: inline-block;
+                font-family: Cursive;
+                font-weight: bold;
+                font-size: 30px;
+                margin-left: 50px;
+                transition: 6s;
+            }
+
+            .player_destroyer_hp {
+                display: inline-block;
+                font-family: Cursive;
+                font-weight: bold;
+                font-size: 30px;
+                margin-left: 80px;
+                transition: 6s;
+            }
+
+            .player_carrier_hp {
+                display: inline-block;
+                font-family: Cursive;
+                font-weight: bold;
+                font-size: 30px;
+                margin-left: 75px;
+                transition: 6s;
+            }
+
+            .player_battleship_hp {
+                display: inline-block;
+                font-family: Cursive;
+                font-weight: bold;
+                font-size: 30px;
+                margin-left: 80px;
+                transition: 6s;
+            }
+
+            .player_cruiser_hp {
+                display: inline-block;
+                font-family: Cursive;
+                font-weight: bold;
+                font-size: 30px;
+                margin-left: 80px;
+                transition: 6s;
+            }
+
           
         </style>
         
@@ -79,6 +131,11 @@
         <div class="player_board">
             <p class="player_title">Player*</p>
 
+            <p class="player_submarine_hp" id="player_submarine_hp">3</p>
+            <p class="player_destroyer_hp" id="player_destroyer_hp">2</p>
+            <p class="player_carrier_hp" id="player_carrier_hp">5</p>
+            <p class="player_battleship_hp" id="player_battleship_hp">4</p>
+            <p class="player_cruiser_hp" id="player_cruiser_hp">3</p>
 
             <div class="player_ship_icons">
                 <img src="icon_submarine.png" id="player_submarine_icon" class="ship_icon">
@@ -188,7 +245,7 @@
             <button id="player_89" class="player_button" onclick="fire_at_grid(this.id)">J9</button>
             <div></div>
         </div>
-
+        <img src="arrow.png" id="arrow" class="arrow_icon">
         <div class="opponent_board" id="opponent_board">
             <p class="opponent_title">Opponent</p>
             <div class="opponent_ship_icons">
@@ -313,27 +370,72 @@
 
 
 
-            const player_board = [[false, false, "destroyer", false, false, false, "cruiser", "cruiser", "cruiser", false],
-                                  [false, false, "destroyer", false, false, false, false, false, false, false],
+            // Indicators of how many hits are left 
+            // until a ship is fully destroyed
+            let player_destroyer = {
+                title: "player_destroyer",
+                hp: 2
+            }
+            let player_cruiser = {
+                title: "player_cruiser",
+                hp: 3
+            } 
+            let player_submarine = {
+                title: "player_submarine",
+                hp: 3
+            } 
+            let player_battleship = {
+                title: "player_battleship",
+                hp: 4
+            }
+            let player_carrier = {
+                title: "player_carrier",
+                hp: 5
+            }
+
+            let opponent_destroyer = {
+                title: "opponent_destroyer",
+                hp: 2
+            }
+            let opponent_cruiser = {
+                title: "opponent_cruiser",
+                hp: 3
+            } 
+            let opponent_submarine = {
+                title: "opponent_submarine",
+                hp: 3
+            } 
+            let opponent_battleship = {
+                title: "opponent_battleship",
+                hp: 4
+            }
+            let opponent_carrier = {
+                title: "opponent_carrier",
+                hp: 5
+            }
+
+
+            const player_board = [[false, false, player_destroyer, false, false, false, player_cruiser, player_cruiser, player_cruiser, false],
+                                  [false, false, player_destroyer, false, false, false, false, false, false, false],
                                   [false, false, false, false, false, false, false, false, false, false],
                                   [false, false, false, false, false, false, false, false, false, false],
-                                  ["carrier", false, false, false, false, "submarine", "submarine", "submarine", false, false],
-                                  ["carrier", false, false, false, false, false, false, false, false, false],
-                                  ["carrier", false, false, false, false, false, false, false, false, false],
-                                  ["carrier", false, false, false, false, false, false, false, false, false],
-                                  ["carrier", false, "battleship", "battleship", "battleship", "battleship", false, false, false, false]];
+                                  [player_carrier, false, false, false, false, player_submarine, player_submarine, player_submarine, false, false],
+                                  [player_carrier, false, false, false, false, false, false, false, false, false],
+                                  [player_carrier, false, false, false, false, false, false, false, false, false],
+                                  [player_carrier, false, false, false, false, false, false, false, false, false],
+                                  [player_carrier, false, player_battleship, player_battleship, player_battleship, player_battleship, false, false, false, false]];
 
 
     
 
-            const opponent_board = [["destroyer", false, false, false, false, false, false, false, false, "battleship"],
-                                  ["destroyer", false, false, false, false, false, false, false, false, "battleship"],
-                                  [false, false, false, false, false, false, false, false, false, "battleship"],
-                                  [false, false, false, false, false, false, "submarine", false, false, "battleship"],
-                                  [false, false, false, false, false, false, "submarine", false, false, false],
-                                  [false, false, false, false, false, false, "submarine", false, false, false],
-                                  [false, "cruiser", "cruiser", "cruiser", false, false, false, false, false, false],
-                                  [false, false, false, false, "carrier", "carrier", "carrier", "carrier", "carrier", false],
+            const opponent_board = [[false, false, false, false, false, false, false, false, false, opponent_battleship],
+                                  [false, false, false, false, false, false, false, false, false, opponent_battleship],
+                                  [opponent_destroyer, false, false, false, false, false, false, false, false, opponent_battleship],
+                                  [opponent_destroyer, false, false, false, false, false, opponent_submarine, false, false, opponent_battleship],
+                                  [false, false, false, false, false, false, opponent_submarine, false, false, false],
+                                  [false, false, false, false, false, false, opponent_submarine, false, false, false],
+                                  [false, opponent_cruiser, opponent_cruiser, opponent_cruiser, false, false, false, false, false, false],
+                                  [false, false, false, false, opponent_carrier, opponent_carrier, opponent_carrier, opponent_carrier, opponent_carrier, false],
                                   [false, false, false, false, false, false, false, false, false, false]];
 
 
@@ -348,18 +450,6 @@
                 }
             }
                                 
-        // Indicators of how many hits are left 
-        // until a ship is fully destroyed
-        let player_destroyer = 2;
-        let player_cruiser = 3;
-        let player_submarine = 3;
-        let player_battleship = 4;
-        let player_carrier = 5;
-        let opponent_destroyer = 2;
-        let opponent_cruiser = 3;
-        let opponent_submarine = 3;
-        let opponent_battleship = 4;
-        let opponent_carrier = 5;
 
         
         function fire_at_grid(button_id, board) { 
@@ -370,23 +460,32 @@
 
             if (opponent_board[row][column] !== false) {  // Hit
                 sonar_sound_effect.play();
-                remove_ship(opponent_board[row][column], "opponent");
+                remove_ship(opponent_board[row][column]);
                 opponent_board[row][column] = false;
                 button.style.backgroundColor = 'red'; // Change button color
             }   
 
             lock_board();  // Lock the board during the AIs turn
-            setTimeout(ai_fire_at_player, 3000);  // 3s delay until AI fires
+            setTimeout(ai_fire_at_player, Math.floor(Math.random() * 2000) + 1000);  // 1-3s delay until AI fires
         }
 
 
 
         // This function targets a random tile on the players board for the AI to shoot at
-        // The AI won't target the same tile twice
+        // The AI won't target the same tile twice.
+        // AI will remember direct hits on tiles and will shoot adjacent tiles until ship is sunk
         // Locks player interactivity while the AI plays
+        let ai_memory = [];
         function ai_fire_at_player() {
-            const random_row = Math.floor(Math.random() * (player_board[0].length - 1))  + 0;  // Generate a random number between 0 - max size of a row on the game board
-            const random_column = Math.floor(Math.random() * (player_board.length + 1 )) + 0;  // Generate a random number between 0 - max size of a column on the game board
+            let random_row = Math.floor(Math.random() * (player_board[0].length - 1))  + 0;  // Generate a random number between 0 - max size of a row on the game board
+            let random_column = Math.floor(Math.random() * (player_board.length + 1 )) + 0;  // Generate a random number between 0 - max size of a column on the game board
+           
+            if (ai_memory[0] !== undefined) {  // Shoot at tiles stored in memory, if they exist
+                random_row = ai_memory[0][0];
+                random_column = ai_memory[0][1];
+                ai_memory.shift();
+            }
+            
             const button = document.getElementById(`player_${random_row}${random_column}`);  // ID of current button     
 
             if (player_board[random_row][random_column] === true) {  // If the tile is true it means that the AI has already probed that spot. If so, the function will run again until a new tile is found
@@ -395,12 +494,15 @@
 
             else if (player_board[random_row][random_column] !== false) {  // Hit
                 sonar2_sound_effect.play();
-                remove_ship(player_board[random_row][random_column], "player");
-                button.style.backgroundColor = 'red'; // Change button color
+                ai_memory_store(random_row, random_column);  // Store adjacent tiles in memory
+                remove_ship(player_board[random_row][random_column]);
+                button.style.backgroundColor = 'red';
+                
             }
 
             else {  // Miss
                 button.style.backgroundColor = 'gray';
+                button.style.animation;
             } 
         
             player_board[random_row][random_column] = true;
@@ -411,93 +513,25 @@
         // This function deducts points from a ship type, either from the player or the opponent.
         // If a ship is fully destroyed, its logo is replaced by a blank one.
         // @ param {ship_type} string - ship type to deduct points from
-        // @ param {friendfoe} string - remove from either "player" or "opponent"
-        function remove_ship(ship_type, friendfoe) {
-            if (friendfoe === "opponent") {  // Remove ship from the opponent
-                if(ship_type === "destroyer") {
-                opponent_destroyer -= 1;
-                    if (opponent_destroyer === 0) {
-                        explosion_sound_effect.play();
-                        const icon = document.getElementById('opponent_destroyer_icon');
-                        icon.src = 'blank.png';
-                    }
-                }
-                else if(ship_type === "cruiser") {
-                    opponent_cruiser -= 1;
-                    if (opponent_cruiser === 0) {
-                        explosion_sound_effect.play();
-                        const icon = document.getElementById('opponent_cruiser_icon');
-                        icon.src = 'blank.png';
-                    }
-                }
-                else if(ship_type === "submarine") {
-                    opponent_submarine -= 1;
-                    if (opponent_submarine === 0) {
-                        explosion_sound_effect.play();
-                        const icon = document.getElementById('opponent_submarine_icon');
-                        icon.src = 'blank.png';
-                    }
-                }
-                else if(ship_type === "battleship") {
-                    opponent_battleship -= 1;
-                    if (opponent_battleship === 0) {
-                        explosion_sound_effect.play();
-                        const icon = document.getElementById('opponent_battleship_icon');
-                        icon.src = 'blank.png';
-                    }
-                }
-                else if(ship_type === "carrier") {
-                    opponent_carrier -= 1;
-                    if (opponent_carrier === 0) {
-                        explosion_sound_effect.play();
-                        const icon = document.getElementById('opponent_carrier_icon');
-                        icon.src = 'blank.png';
-                    }
+        function remove_ship(ship_type) {
+            ship_type.hp -= 1  // Deduct ship HP
+
+            if (ship_type.title.slice(0, 6) === 'player') {  // If player ship
+                let ship_paragraph = document.getElementById(`${ship_type.title}_hp`);
+                ship_paragraph.textContent = ship_type.hp;  // Update ship HP indicator
+                ship_paragraph.style.color = 'red';
+                if (ship_type.hp === 0) {
+                    ai_memory.length = 0;  // Clear AI memory
+                    setTimeout(fade_out_paragraph(`${ship_type.title}_hp`), 1000);  // Fade out ships HP indicator if 0
                 }
             }
 
-            else if (friendfoe === "player") {  // Remove ship from the player
-                if(ship_type === "destroyer") {
-                player_destroyer -= 1;
-                    if (player_destroyer === 0) {
-                        explosion_sound_effect.play();
-                        const icon = document.getElementById('player_destroyer_icon');
-                        icon.src = 'blank.png';
-                    }
-                }
-                else if(ship_type === "cruiser") {
-                    player_cruiser -= 1;
-                    if (player_cruiser === 0) {
-                        explosion_sound_effect.play();
-                        const icon = document.getElementById('player_cruiser_icon');
-                        icon.src = 'blank.png';
-                    }
-                }
-                else if(ship_type === "submarine") {
-                    player_submarine -= 1;
-                    if (player_submarine === 0) {
-                        explosion_sound_effect.play();
-                        const icon = document.getElementById('player_submarine_icon');
-                        icon.src = 'blank.png';
-                    }
-                }
-                else if(ship_type === "battleship") {
-                    player_battleship -= 1;
-                    if (player_battleship === 0) {
-                        explosion_sound_effect.play();
-                        const icon = document.getElementById('player_battleship_icon');
-                        icon.src = 'blank.png';
-                    }
-                }
-                else if(ship_type === "carrier") {
-                    player_carrier -= 1;
-                    if (player_carrier === 0) {
-                        explosion_sound_effect.play();
-                        const icon = document.getElementById('player_carrier_icon');
-                        icon.src = 'blank.png';
-                    }
-                }
-            } 
+            if (ship_type.hp <= 0) {  // For all ships
+                explosion_sound_effect.play();
+                const icon = document.getElementById(`${ship_type.title}_icon`);
+                icon.src = 'blank.png';  // Change ship icon to a blank one if HP 0
+            }
+
             check_win_condition();  // Check if a player has no ships left
         }
 
@@ -506,26 +540,28 @@
         // If either the player or the opponent has no ships left
         // the win condition is met
         function check_win_condition() {
-            if (opponent_destroyer === 0 &&
-                opponent_cruiser === 0 &&
-                opponent_submarine === 0 &&
-                opponent_battleship === 0 &&
-                opponent_carrier === 0) {
-                    alert("You win!")
+            if (opponent_destroyer.hp <= 0 &&
+                opponent_cruiser.hp <= 0 &&
+                opponent_submarine.hp <= 0 &&
+                opponent_battleship.hp <= 0 &&
+                opponent_carrier.hp <= 0) {
+                    alert("You win!");
                 }
 
-            else if (player_destroyer === 0 &&
-            player_cruiser === 0 &&
-            player_submarine === 0 &&
-            player_battleship === 0 &&
-            player_carrier === 0) {
-                alert("Opponent wins!")
+            else if (player_destroyer.hp <= 0 &&
+            player_cruiser.hp <= 0 &&
+            player_submarine.hp <= 0 &&
+            player_battleship.hp <= 0 &&
+            player_carrier.hp <= 0) {
+                alert("Opponent wins!");
             }
         }    
 
 
         // Locks the opponents board, making the buttons unclickabe
         // Puts an asterix next to the opponents title, indicating that it's their turn
+        const  arrow_icon = document.querySelector('.arrow_icon');
+
         function lock_board() {
             const board = document.getElementById('opponent_board');
             board.style.pointerEvents = 'none';
@@ -535,8 +571,13 @@
 
             const opponent_title = document.querySelector('.opponent_title');
             opponent_title.textContent = 'Opponent*';
+
+            document.body.style.cursor = 'not-allowed';  // Changes the cursor while waiting
+
+            arrow_icon.style.transform = 'rotate(180deg)';
         }
 
+        
         // Unlocks the board, making it clickable again
         // Asterix next to the players title, indicating that it's their turn
         function unlock_board() {
@@ -547,9 +588,40 @@
             player_title.textContent = 'Player*';
 
             const opponent_title = document.querySelector('.opponent_title');
-            opponent_title.textContent = 'Opponent';         
+            opponent_title.textContent = 'Opponent';   
+            
+            document.body.style.cursor = 'pointer';  // Default cursor
+            arrow_icon.style.transform = 'rotate(360deg)';
         }
 
+
+        function fade_out_paragraph(paragraph) {
+            const selected_paragraph = document.getElementById(paragraph);
+            selected_paragraph.style.opacity = '0';
+        }
+
+
+        // Stores tiles over, under, left and right of a tile
+        // within the boundary of the board, inside the AIs memory
+        function ai_memory_store(row, column) {
+            const over = [row - 1, column];
+            const under = [row + 1, column];
+            const left = [row, column - 1];
+            const right = [row, column + 1];
+
+            if (over[0] >= 0 && over[0] <= 8) {
+                ai_memory.push(over);
+            }
+            if (under[0] >= 0 && under[0] <= 8) {
+                ai_memory.push(under);
+            }
+            if (left[1] >= 0 && left[1] <= 9) {
+                ai_memory.push(left);
+            }
+            if (right[1] >= 0 && right[1] <= 9) {
+                ai_memory.push(right);
+            }
+        }
 
         </script>
     </body>
