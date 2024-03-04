@@ -1,0 +1,20 @@
+Note: If the downloaded project folder contains both the 'js_code.ts' and 'js_code.js' files, you should be able to skip the compiling and go directly to step 6.
+
+
+1. Make sure TypeScript is installed globally.
+
+2. Open Command Prompt (Windows).
+
+3. Navigate to the directory where your js_code.ts file is located. Using: C:\Users\...\js_code.ts
+
+4. Run the TypeScript compiler: tsc js_code.ts
+
+5. This command will compile js_code.ts into js_code.js.
+
+6. Open your browser and navigate to: file:///C:/Users/.../project_folder  (wherever the project is stored).
+
+7. Click main.html
+
+
+
+

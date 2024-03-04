@@ -1,0 +1,102 @@
+.player_button {
+    background-color: rgb(204, 210, 215);
+    padding: 15px 15px;
+}
+
+.player_board {
+    display: inline-block;  /* Ensures that the block doesnt take up the whole line */
+}
+
+.player_title {
+    font-weight: bolder;
+    font-family: Arial;
+    color: rgb(49, 76, 208);
+    font-size: 60px;
+    margin-left: 170px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7)
+}
+
+.opponent_button {
+    background-color: rgb(204, 210, 215);
+    padding: 15px 15px;
+    cursor: crosshair;
+}
+
+.opponent_button:hover { 
+    background-color: rgb(232, 245, 119);
+    border-style: dashed;
+}
+
+.opponent_board {
+    display: inline-block;   /* Ensures that the block doesnt take up the whole line */
+    pointer-events: auto;
+}
+
+.opponent_title {
+    font-weight: bolder;
+    font-family: Arial;
+    color: rgb(214, 56, 56);
+    font-size: 60px;
+    margin-left: 130px;
+    margin-bottom: 150px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7)
+}
+
+.ship_icon {
+    display: inline-block;
+    width: 100px;
+}
+
+.ship_score {
+    display: inline-block;
+}
+
+.arrow_icon {
+    width: 100px;
+    margin-bottom: 175px;
+}
+
+.player_submarine_hp {
+    display: inline-block;
+    font-family: Cursive;
+    font-weight: bold;
+    font-size: 30px;
+    margin-left: 50px;
+    transition: 6s;
+}
+
+.player_destroyer_hp {
+    display: inline-block;
+    font-family: Cursive;
+    font-weight: bold;
+    font-size: 30px;
+    margin-left: 80px;
+    transition: 6s;
+}
+
+.player_carrier_hp {
+    display: inline-block;
+    font-family: Cursive;
+    font-weight: bold;
+    font-size: 30px;
+    margin-left: 75px;
+    transition: 6s;
+}
+
+.player_battleship_hp {
+    display: inline-block;
+    font-family: Cursive;
+    font-weight: bold;
+    font-size: 30px;
+    margin-left: 80px;
+    transition: 6s;
+}
+
+.player_cruiser_hp {
+    display: inline-block;
+    font-family: Cursive;
+    font-weight: bold;
+    font-size: 30px;
+    margin-left: 80px;
+    transition: 6s;
+}
